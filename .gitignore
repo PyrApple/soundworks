@@ -1,0 +1,16 @@
+# transpiled files
+/client
+/server
+/utils
+
+# others
+/node_modules
+
+# documentation default output
+/out
+
+# junk files
+npm-debug.log
+.DS_Store
+Thumbs.db
+NOTES.md

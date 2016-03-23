@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Soundworks - Source: client/core/Activity.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/overrides.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    
+    <h1 class="page-title">Source: client/core/Activity.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Process from './Process';
+import Signal from './Signal';
+import SignalAll from './SignalAll';
+import socket from './socket';
+import View from '../views/View';
+import viewManager from './viewManager';
+
+
+/**
+ * Internal base class for services and scenes. Basically a process with view
+ * and optionnal network abilities.
+ *
+ * @memberof module:soundworks/client
+ * @extends module:soundworks/client.Process
+ */
+class Activity extends Process {
+  /**
+   * @param {String} id - Id of the activity.
+   * @param {Boolean} hasNetwork - Define if the activity needs a socket
+   *  connection or not.
+   */
+  constructor(id, hasNetwork = true) {
+    super(id);
+
+    /**
+     * If `true`, define if the activity has already been started once.
+     * @type {Boolean}
+     * @name hasStarted
+     * @instance
+     * @memberof module:soundworks/client.Activity
+     */
+    this.hasStarted = false;
+
+    // register as a networked service
+    if (hasNetwork) {
+      this.hasNetwork = true;
+      socket.required = true;
+    }
+
+    /**
+     * View of the activity.
+     * @type {module:soundworks/client.View}
+     * @name view
+     * @instance
+     * @memberof module:soundworks/client.Activity
+     */
+    this.view = null;
+
+    /**
+     * Events to bind to the view. (mimic the Backbone's syntax).
+     * @type {Object}
+     * @name viewEvents
+     * @instance
+     * @memberof module:soundworks/client.Activity
+     * @example
+     * this.viewEvents = {
+     *   "touchstart .button": (e) => {
+     *     // do somthing
+     *   },
+     *   // etc...
+     * };
+     */
+    this.viewEvents = {};
+
+    /**
+     * Additionnal options to pass to the view.
+     * @type {Object}
+     * @name viewOptions
+     * @instance
+     * @memberof module:soundworks/client.Activity
+     */
+    this.viewOptions = {};
+
+    /**
+     * View constructor to be used in
+     * [`Activity#createView`]{@link module:soundworks/client.Activity#createView}.
+     * @type {module:soundworks/client.View}
+     * @default module:soundworks/client.View
+     * @name viewCtor
+     * @instance
+     * @memberof module:soundworks/client.Activity
+     */
+    this.viewCtor = View;
+
+    /**
+     * Options of the activity.
+     * @type {Object}
+     * @name options
+     * @instance
+     * @memberof module:soundworks/client.Activity
+     */
+    this.options = {};
+    this.configure({ viewPriority: 0 });
+
+    /**
+     * Define which signal the `Activity` requires to start.
+     * @private
+     */
+    this.requiredSignals = new SignalAll();
+
+    this.send = this.send.bind(this);
+    this.sendVolatile = this.sendVolatile.bind(this);
+    this.receive = this.receive.bind(this);
+    this.removeListener = this.removeListener.bind(this);
+  }
+
+  /**
+   * Interface method to be implemented in child classes.
+   * Define what to do when a service is required by an `Activity`.
+   */
+  require() {}
+
+  /**
+   * Configure the activity with the given options.
+   * @param {Object} options
+   */
+  configure(options) {
+    Object.assign(this.options, options);
+  }
+
+  /**
+   * Share the defined view templates with all `Activity` instances.
+   * @param {Object} defs - An object containing the view templates.
+   * @private
+   */
+  static setViewTemplateDefinitions(defs) {
+    Activity.prototype.viewTemplateDefinitions = defs;
+  }
+
+  /**
+   * Share the view content configuration (name and data) with all the
+   * `Activity` instances
+   * @param {Object} defs - The view contents of the application.
+   * @private
+   */
+  static setViewContentDefinitions(defs) {
+    Activity.prototype.viewContentDefinitions = defs;
+  }
+
+  /**
+   * The template related to the `id` of the activity.
+   * @type {String}
+   * @see {@link module:soundworks/client.defaultViewTemplates}
+   */
+  get viewTemplate() {
+    const viewTemplate = this._viewTemplate || this.viewTemplateDefinitions[this.id];
+    // if (!viewTemplate)
+    //   throw new Error(`No view template defined for activity "${this.id}"`);
+    return viewTemplate;
+  }
+
+  set viewTemplate(tmpl) {
+    this._viewTemplate = tmpl;
+  }
+
+  /**
+   * The view contents related to the `id` of the activity. The object is
+   * extended with a pointer to the `globals` entry of the defined view contents.
+   * @type {Object}
+   * @see {@link module:soundworks/client.defaultViewContent}
+   */
+  get viewContent() {
+    const viewContent = this._viewContent || this.viewContentDefinitions[this.id];
+
+    if (viewContent)
+      viewContent.globals = this.viewContentDefinitions.globals;
+
+    return viewContent;
+  }
+
+  set viewContent(obj) {
+    this._viewContent = obj;
+  }
+
+  /**
+   * Create the view of the activity according to its `viewCotr`, `viewTemplate`,
+   * `viewContent`, `viewEvents` and `viewOptions` attributes.
+   */
+  createView() {
+    const options = Object.assign({
+      id: this.id,
+      className: 'activity',
+      priority: this.options.viewPriority,
+    }, this.viewOptions);
+
+    return new this.viewCtor(this.viewTemplate, this.viewContent, this.viewEvents, options);
+  }
+
+  /**
+   * Request the view manager to display the view. The call of this method
+   * doesn't garantee a synchronized rendering of the view as the view manager
+   * decide which view to display based on their priority.
+   */
+  show() {
+    if (!this.view) { return; }
+
+    this.view.render();
+    viewManager.register(this.view);
+  }
+
+  /**
+   * Hide the view of the activity if it owns one.
+   */
+  hide() {
+    if (!this.view) { return; }
+
+    viewManager.remove(this.view);
+  }
+
+  /**
+   * Sends a WebSocket message to the server side socket.
+   * @param {String} channel - The channel of the message (is automatically
+   *  namespaced with the activity's id: `${this.id}:channel`).
+   * @param {...*} args - Arguments of the message (as many as needed, of any type).
+   */
+  send(channel, ...args) {
+    socket.send(`${this.id}:${channel}`, ...args);
+  }
+
+  /**
+   * Sends a WebSocket message to the server side socket.
+   * @param {String} channel - The channel of the message (is automatically
+   *  namespaced with the activity's id: `${this.id}:channel`).
+   * @param {...*} args - Arguments of the message (as many as needed, of any type).
+   */
+  sendVolatile(channel, ...args) {
+    socket.sendVolatile(`${this.id}:${channel}`, ...args);
+  }
+
+  /**
+   * Listen a WebSocket message from the server.
+   * @param {String} channel - The channel of the message (is automatically
+   *  namespaced with the activity's id: `${this.id}:channel`).
+   * @param {Function} callback - The callback to execute when a message is received.
+   */
+  receive(channel, callback) {
+    socket.receive(`${this.id}:${channel}`, callback);
+  }
+
+  /**
+   * Stop listening to a message from the server.
+   * @param {String} channel - The channel of the message (is automatically
+   *  namespaced with the activity's id: `${this.id}:channel`).
+   * @param {Function} callback - The callback to remove from the stack.
+   */
+  removeListener(channel, callback) {
+    socket.removeListener(`${this.id}:${channel}`, callback);
+  }
+}
+
+export default Activity;
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-soundworks_client.html">soundworks/client</a></li><li><a href="module-soundworks_server.html">soundworks/server</a></li></ul><h3>Classes</h3><ul><li><a href="module-soundworks_client.Activity.html">soundworks/client.Activity</a></li><li><a href="module-soundworks_client.CanvasView.html">soundworks/client.CanvasView</a></li><li><a href="module-soundworks_client.Checkin.html">soundworks/client.Checkin</a></li><li><a href="module-soundworks_client.ErrorReporter.html">soundworks/client.ErrorReporter</a></li><li><a href="module-soundworks_client.Experience.html">soundworks/client.Experience</a></li><li><a href="module-soundworks_client.Loader.html">soundworks/client.Loader</a></li><li><a href="module-soundworks_client.Locator.html">soundworks/client.Locator</a></li><li><a href="module-soundworks_client.MotionInput.html">soundworks/client.MotionInput</a></li><li><a href="module-soundworks_client.Network.html">soundworks/client.Network</a></li><li><a href="module-soundworks_client.Placer.html">soundworks/client.Placer</a></li><li><a href="module-soundworks_client.Platform.html">soundworks/client.Platform</a></li><li><a href="module-soundworks_client.Renderer.html">soundworks/client.Renderer</a></li><li><a href="module-soundworks_client.Scene.html">soundworks/client.Scene</a></li><li><a href="module-soundworks_client.Scheduler.html">soundworks/client.Scheduler</a></li><li><a href="module-soundworks_client.SegmentedView.html">soundworks/client.SegmentedView</a></li><li><a href="module-soundworks_client.SharedConfig.html">soundworks/client.SharedConfig</a></li><li><a href="module-soundworks_client.SharedParams.html">soundworks/client.SharedParams</a></li><li><a href="module-soundworks_client.Sync.html">soundworks/client.Sync</a></li><li><a href="module-soundworks_client.View.html">soundworks/client.View</a></li><li><a href="module-soundworks_client.Welcome.html">soundworks/client.Welcome</a></li><li><a href="module-soundworks_server.Checkin.html">soundworks/server.Checkin</a></li><li><a href="module-soundworks_server.ErrorReporter.html">soundworks/server.ErrorReporter</a></li><li><a href="module-soundworks_server.Locator.html">soundworks/server.Locator</a></li><li><a href="module-soundworks_server.Network.html">soundworks/server.Network</a></li><li><a href="module-soundworks_server.Osc.html">soundworks/server.Osc</a></li><li><a href="module-soundworks_server.Placer.html">soundworks/server.Placer</a></li><li><a href="module-soundworks_server.SharedConfig.html">soundworks/server.SharedConfig</a></li><li><a href="module-soundworks_server.SharedParams.html">soundworks/server.SharedParams</a></li><li><a href="module-soundworks_server.Sync.html">soundworks/server.Sync</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-soundworks_client.client.html">soundworks/client.client</a></li><li><a href="module-soundworks_client.defaultViewContent.html">soundworks/client.defaultViewContent</a></li><li><a href="module-soundworks_client.defaultViewTemplates.html">soundworks/client.defaultViewTemplates</a></li><li><a href="module-soundworks_client.viewport.html">soundworks/client.viewport</a></li><li><a href="module-soundworks_server.server.html">soundworks/server.server</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Mar 23 2016 19:18:57 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

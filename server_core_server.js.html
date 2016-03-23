@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Soundworks - Source: server/core/server.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/overrides.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    
+    <h1 class="page-title">Source: server/core/server.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Client from './Client';
+import ejs from 'ejs';
+import express from 'express';
+import fs from 'fs';
+import http from 'http';
+import https from 'https';
+import IO from 'socket.io';
+import logger from '../utils/logger';
+import path from 'path';
+import pem from 'pem';
+import serviceManager from './serviceManager';
+import sockets from './sockets';
+
+// import default configuration
+import { default as defaultAppConfig } from '../config/app';
+import { default as defaultFwConfig } from '../config/fw';
+import { default as defaultEnvConfig } from '../config/env';
+
+
+/**
+ * Server side entry point for a `soundworks` application.
+ *
+ * This object host configuration informations, as well as methods to
+ * initialize and start the application. It is also responsible for creating
+ * the static file (http) server as well as the socket server.
+ *
+ * @memberof module:soundworks/server
+ * @namespace
+ *
+ * @example
+ * import * as soundworks from 'soundworks/server';
+ * import MyExperience from './MyExperience';
+ *
+ * soundworks.server.init({ appName: 'MyApplication' });
+ * const myExperience = new MyExperience();
+ * soundworks.server.start();
+ */
+const server = {
+  /**
+   * SocketIO server.
+   * @type {Object}
+   * @private
+   */
+  io: null,
+
+  /**
+   * Configuration informations, all config objects passed to the
+   * [`server.init`]{@link module:soundworks/server.server.init} are merged
+   * into this object.
+   * @type {Object}
+   */
+  config: {},
+
+  /**
+   * Mapping between a `clientType` and its related activities.
+   * @private
+   */
+  _clientTypeActivitiesMap: {},
+
+  /**
+   * Required activities that must be started.
+   * @private
+   */
+  _activities: new Set(),
+
+  /**
+   * Map client types with an activity.
+   * @param {Array&lt;String>} clientTypes - List of client type.
+   * @param {Activity} activity - Activity concerned with the given `clientTypes`.
+   * @private
+   */
+  _setMap(clientTypes, activity) {
+    clientTypes.forEach((clientType) => {
+      if (!this._clientTypeActivitiesMap[clientType])
+        this._clientTypeActivitiesMap[clientType] = new Set();
+
+      this._clientTypeActivitiesMap[clientType].add(activity);
+    });
+  },
+
+  /**
+   * Function used by activities to register themselves as active activities
+   * @param {Activity} activity - Activity to be registered.
+   * @private
+   */
+  setActivity(activity) {
+    this._activities.add(activity);
+  },
+
+  /**
+   * Return a service configured with the given options.
+   * @param {String} id - Identifier of the service.
+   * @param {Object} options - Options to configure the service.
+   */
+  require(id, options) {
+    return serviceManager.require(id, null, options);
+  },
+
+  /**
+   * Initialize the server with the given config objects.
+   * @param {...Object} configs - configuration object to be merge with the
+   *  default `soundworks` config.
+   *
+   * @see {@link module:soundworks/server.app}
+   * @see {@link module:soundworks/server.env}
+   * @see {@link module:soundworks/server.fw}
+   */
+  init(...configs) {
+    // merge default configuration objects
+    this.config = Object.assign(this.config, defaultAppConfig, defaultFwConfig, defaultEnvConfig);
+    // merge given configurations objects with defaults (1 level depth)
+    configs.forEach((config) => {
+      for (let key in config) {
+        const entry = config[key];
+        if (typeof entry === 'object' &amp;&amp; entry !== null) {
+          this.config[key] = this.config[key] || {};
+          this.config[key] = Object.assign(this.config[key], entry);
+        } else {
+          this.config[key] = entry;
+        }
+      }
+    });
+  },
+
+  /**
+   * Start the application:
+   * - launch the HTTP server.
+   * - launch the socket server.
+   * - start all registered activities.
+   * - define routes and and activities mapping for all client types.
+   */
+  start() {
+    logger.initialize(this.config.logger);
+
+    // --------------------------------------------------
+    // configure express and http(s) server
+    // --------------------------------------------------
+    const expressApp = new express();
+    expressApp.set('port', process.env.PORT || this.config.port);
+    expressApp.set('view engine', 'ejs');
+    expressApp.use(express.static(this.config.publicFolder));
+
+    let httpServer;
+
+    if (!this.config.useHttps) {
+      httpServer = http.createServer(expressApp);
+      this._initSockets(httpServer);
+      this._initActivities(expressApp);
+
+      httpServer.listen(expressApp.get('port'), function() {
+        const url = `http://127.0.0.1:${expressApp.get('port')}`;
+        console.log('[HTTP SERVER] Server listening on', url);
+      });
+    } else {
+      pem.createCertificate({ days: 1, selfSigned: true }, (err, keys) => {
+        httpServer = https.createServer({
+          key: keys.serviceKey,
+          cert: keys.certificate
+        }, expressApp);
+
+        this._initSockets(httpServer);
+        this._initActivities(expressApp);
+
+        httpServer.listen(expressApp.get('port'), function() {
+          const url = `https://127.0.0.1:${expressApp.get('port')}`;
+          console.log('[HTTP SERVER] Server listening on', url);
+        });
+      });
+    }
+  },
+
+  /**
+   * Init websocket server.
+   * @private
+   */
+  _initSockets(httpServer) {
+    this.io = new IO(httpServer, this.config.socketIO);
+
+    if (this.config.cordova &amp;&amp; this.config.cordova.socketIO) // IO add some configuration options to the object
+      this.config.cordova.socketIO = Object.assign({}, this.config.socketIO, this.config.cordova.socketIO);
+
+    sockets.initialize(this.io);
+  },
+
+  /**
+   * Start all activities and map the routes (clientType / activities mapping).
+   * @private
+   */
+  _initActivities(expressApp) {
+    this._activities.forEach((activity) => activity.start());
+
+    this._activities.forEach((activity) => {
+      this._setMap(activity.clientTypes, activity)
+    });
+
+    // map `clientType` to their respective activities
+    for (let clientType in this._clientTypeActivitiesMap) {
+      const activity = this._clientTypeActivitiesMap[clientType];
+      this._map(clientType, activity, expressApp);
+    }
+  },
+
+  /**
+   * Map a client type to a route, a set of activities.
+   * Additionnally listen for their socket connection.
+   * @private
+   */
+  _map(clientType, activities, expressApp) {
+    // @todo - allow to pass some variable in the url -> define how bind it to sockets...
+    const url = (clientType !== this.config.defaultClient) ? `/${clientType}` : '/';
+
+    // use template with `clientType` name or default if not defined
+    const clientTmpl = path.join(this.config.templateFolder, `${clientType}.ejs`);
+    const defaultTmpl = path.join(this.config.templateFolder, `default.ejs`);
+    const template = fs.existsSync(clientTmpl) ? clientTmpl : defaultTmpl;
+
+    const tmplString = fs.readFileSync(template, { encoding: 'utf8' });
+    const tmpl = ejs.compile(tmplString);
+
+    expressApp.get(url, (req, res) => {
+      let includeCordovaTags = false;
+      let socketConfig = JSON.stringify(this.config.socketIO);
+
+      if (req.query.cordova) {
+        includeCordovaTags = true;
+        socketConfig = JSON.stringify(this.config.cordova.socketIO);
+      }
+
+      if (req.query.clientType)
+        clientType = req.query.clientType;
+
+      res.send(tmpl({
+        socketIO: socketConfig,
+        appName: this.config.appName,
+        clientType: clientType,
+        defaultType: this.config.defaultClient,
+        assetsDomain: this.config.assetsDomain,
+        // export html for cordova use
+        includeCordovaTags: includeCordovaTags,
+      }));
+    });
+
+    // wait for socket connnection
+    this.io.of(clientType).on('connection', this._onConnection(clientType, activities));
+  },
+
+  /**
+   * Socket connection callback.
+   * @private
+   */
+  _onConnection(clientType, activities) {
+    return (socket) => {
+      const client = new Client(clientType, socket);
+      activities.forEach((activity) => activity.connect(client));
+
+      // global lifecycle of the client
+      sockets.receive(client, 'disconnect', () => {
+        activities.forEach((activity) => activity.disconnect(client));
+        client.destroy();
+        logger.info({ socket, clientType }, 'disconnect');
+      });
+
+      // @todo - refactor handshake and uuid definition.
+      sockets.send(client, 'client:start', client.uuid);
+      logger.info({ socket, clientType }, 'connection');
+    }
+  },
+};
+
+export default server;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-soundworks_client.html">soundworks/client</a></li><li><a href="module-soundworks_server.html">soundworks/server</a></li></ul><h3>Classes</h3><ul><li><a href="module-soundworks_client.Activity.html">soundworks/client.Activity</a></li><li><a href="module-soundworks_client.CanvasView.html">soundworks/client.CanvasView</a></li><li><a href="module-soundworks_client.Checkin.html">soundworks/client.Checkin</a></li><li><a href="module-soundworks_client.ErrorReporter.html">soundworks/client.ErrorReporter</a></li><li><a href="module-soundworks_client.Experience.html">soundworks/client.Experience</a></li><li><a href="module-soundworks_client.Loader.html">soundworks/client.Loader</a></li><li><a href="module-soundworks_client.Locator.html">soundworks/client.Locator</a></li><li><a href="module-soundworks_client.MotionInput.html">soundworks/client.MotionInput</a></li><li><a href="module-soundworks_client.Network.html">soundworks/client.Network</a></li><li><a href="module-soundworks_client.Placer.html">soundworks/client.Placer</a></li><li><a href="module-soundworks_client.Platform.html">soundworks/client.Platform</a></li><li><a href="module-soundworks_client.Renderer.html">soundworks/client.Renderer</a></li><li><a href="module-soundworks_client.Scene.html">soundworks/client.Scene</a></li><li><a href="module-soundworks_client.Scheduler.html">soundworks/client.Scheduler</a></li><li><a href="module-soundworks_client.SegmentedView.html">soundworks/client.SegmentedView</a></li><li><a href="module-soundworks_client.SharedConfig.html">soundworks/client.SharedConfig</a></li><li><a href="module-soundworks_client.SharedParams.html">soundworks/client.SharedParams</a></li><li><a href="module-soundworks_client.Sync.html">soundworks/client.Sync</a></li><li><a href="module-soundworks_client.View.html">soundworks/client.View</a></li><li><a href="module-soundworks_client.Welcome.html">soundworks/client.Welcome</a></li><li><a href="module-soundworks_server.Checkin.html">soundworks/server.Checkin</a></li><li><a href="module-soundworks_server.ErrorReporter.html">soundworks/server.ErrorReporter</a></li><li><a href="module-soundworks_server.Locator.html">soundworks/server.Locator</a></li><li><a href="module-soundworks_server.Network.html">soundworks/server.Network</a></li><li><a href="module-soundworks_server.Osc.html">soundworks/server.Osc</a></li><li><a href="module-soundworks_server.Placer.html">soundworks/server.Placer</a></li><li><a href="module-soundworks_server.SharedConfig.html">soundworks/server.SharedConfig</a></li><li><a href="module-soundworks_server.SharedParams.html">soundworks/server.SharedParams</a></li><li><a href="module-soundworks_server.Sync.html">soundworks/server.Sync</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-soundworks_client.client.html">soundworks/client.client</a></li><li><a href="module-soundworks_client.defaultViewContent.html">soundworks/client.defaultViewContent</a></li><li><a href="module-soundworks_client.defaultViewTemplates.html">soundworks/client.defaultViewTemplates</a></li><li><a href="module-soundworks_client.viewport.html">soundworks/client.viewport</a></li><li><a href="module-soundworks_server.server.html">soundworks/server.server</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Mar 23 2016 19:18:57 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
