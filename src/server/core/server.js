@@ -12,9 +12,9 @@ import serviceManager from './serviceManager';
 import sockets from './sockets';
 
 // import default configuration
-import { default as defaultAppConfig } from '../config/app';
-import { default as defaultFwConfig } from '../config/fw';
-import { default as defaultEnvConfig } from '../config/env';
+import { default as defaultAppConfig } from '../config/defaultAppConfig';
+import { default as defaultEnvConfig } from '../config/defaultEnvConfig';
+import { default as defaultFwConfig } from '../config/defaultFwConfig';
 
 
 /**
@@ -99,7 +99,12 @@ const server = {
   /**
    * Initialize the server with the given config objects.
    * @param {...Object} configs - configuration object to be merge with the
+<<<<<<< HEAD
    *  default `soundworks` config.
+=======
+   *  default `soundworks` config. (_Note:_ given objects are merged at 2 levels
+   *  of depth)
+>>>>>>> develop
    *
    * @see {@link module:soundworks/server.app}
    * @see {@link module:soundworks/server.env}
