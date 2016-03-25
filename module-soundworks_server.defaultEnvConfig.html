@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Soundworks - Class: MotionInput</title>
+    <title>Soundworks - Namespace: defaultEnvConfig</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -19,7 +19,7 @@
 <div id="main">
 
     
-    <h1 class="page-title">Class: MotionInput</h1>
+    <h1 class="page-title">Namespace: defaultEnvConfig</h1>
     
 
     
@@ -32,12 +32,7 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-soundworks_client.html">soundworks/client</a>.</span>MotionInput</h2>
-        
-            <div class="class-description"><p>Interface of the client <code>'motion-input'</code> service.</p>
-<p>This service provides a wrapper for the
-<a href="https://github.com/collective-soundworks/motion-input"><code>motionInput</code></a>
-external module.</p></div>
+            <span class="ancestors"><a href="module-soundworks_server.html">soundworks/server</a>.</span>defaultEnvConfig</h2>
         
     
 </header>
@@ -46,31 +41,12 @@ external module.</p></div>
     <div class="container-overview">
     
         
+            <div class="description"><p>Configuration parameters of the  environnement, separate files could be
+defined for development and production purpose and passed dynamically
+according to a given <code>process.env</code> variable.</p></div>
+        
 
-    
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="MotionInput"><span class="type-signature"></span>new MotionInput<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p><em><span class="warning"><strong>WARNING</strong></span> This class should never be instanciated manually</em></p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
+        
 
 
 <dl class="details">
@@ -102,46 +78,28 @@ external module.</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_MotionInput.js.html">client/services/MotionInput.js</a>, <a href="client_services_MotionInput.js.html#line28">line 28</a>
+        <a href="server_config_defaultEnvConfig.js.html">server/config/defaultEnvConfig.js</a>, <a href="server_config_defaultEnvConfig.js.html#line12">line 12</a>
     </li></ul></dd>
     
 
     
 
     
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-soundworks_server.defaultAppConfig.html">module:soundworks/server.defaultAppConfig</a></li>
+        
+            <li><a href="module-soundworks_server.defaultFwConfig.html">module:soundworks/server.defaultFwConfig</a></li>
+        </ul>
+    </dd>
+    
 
     
 </dl>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>// in the experince constructor
-this.motionInput = this.require('motioninput', { descriptors: ['energy'] });
-// when the experience has started
-if (this.motionInput.isAvailable('energy')) {
-  this.motionInput.addListener('energy', (data) => {
-    // digest motion data
-  });
-} else {
-  // handle error
-}</code></pre>
-
-
-
+        
     
     </div>
 
@@ -156,413 +114,416 @@ if (this.motionInput.isAvailable('energy')) {
     
 
     
-
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Members</h3>
 
         
             
+<h4 class="name" id=".assetsDomain"><span class="type-signature">(static) </span>assetsDomain<span class="type-signature"> :String</span></h4>
 
-    
-
-    <h4 class="name" id="addListener"><span class="type-signature"></span>addListener<span class="signature">(name, callback)</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    <p>Add a listener to a given descriptor.</p>
+    <p>If assets (basically the content of the <code>publicFolder</code>) are hosted on a
+separate server (e.g. nginx) for scalability and performance reasons,
+register here the IP or URL of this server. By default, assets are served
+by the node.js server.</p>
 </div>
 
 
 
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Descriptor name.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Callback to register.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_MotionInput.js.html">client/services/MotionInput.js</a>, <a href="client_services_MotionInput.js.html#line90">line 90</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="isAvailable"><span class="type-signature"></span>isAvailable<span class="signature">(name)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Define if a given descriptor is available or not</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Descriptor name.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_MotionInput.js.html">client/services/MotionInput.js</a>, <a href="client_services_MotionInput.js.html#line81">line 81</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
+    <h5>Type:</h5>
     <ul>
-<li>Returns <code>true</code> if available, <code>false</code> otherwise.</li>
-</ul>
+        <li>
+            
+<span class="param-type">String</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server_config_defaultEnvConfig.js.html">server/config/defaultEnvConfig.js</a>, <a href="server_config_defaultEnvConfig.js.html#line20">line 20</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".osc"><span class="type-signature">(static) </span>osc<span class="type-signature"> :Object</span></h4>
+
+
+
+
+<div class="description">
+    <p>Configuration of the <code>Osc</code> service.</p>
 </div>
 
 
 
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
         
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>receiveAddress</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    '127.0.0.1'
+                
+                </td>
+            
+
+            <td class="description last"><p>IP of the currently running
+ node server.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>receivePort</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    57121
+                
+                </td>
+            
+
+            <td class="description last"><p>Port where to listen incomming
+ messages</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sendAddress</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    '127.0.0.1'
+                
+                </td>
+            
+
+            <td class="description last"><p>IP of the remote application.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sendPort</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    57120
+                
+                </td>
+            
+
+            <td class="description last"><p>Port where the remote application is
+ listening for messages.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server_config_defaultEnvConfig.js.html">server/config/defaultEnvConfig.js</a>, <a href="server_config_defaultEnvConfig.js.html#line55">line 55</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>module:sounworks/server.Osc</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".port"><span class="type-signature">(static) </span>port<span class="type-signature"> :Number</span></h4>
+
+
+
+
+<div class="description">
+    <p>Default port of the application, in production this value should typically
+be setted to 80.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>8000</li>
+        </ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server_config_defaultEnvConfig.js.html">server/config/defaultEnvConfig.js</a>, <a href="server_config_defaultEnvConfig.js.html#line40">line 40</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".useHttps"><span class="type-signature">(static) </span>useHttps<span class="type-signature"> :Boolean</span></h4>
+
+
+
+
+<div class="description">
+    <p>Define if the HTTP server should be launched using secure connections.
+Currently when set to <code>true</code> (needed to access some browsers features such
+as microphone), a certificate is created on the fly, making browsers to
+display a security warning.
+This options is then not ready for production uses.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">Boolean</span>
 
 
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="removeListener"><span class="type-signature"></span>removeListener<span class="signature">(name, callback)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Remove a listener from a given descriptor.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Descriptor name.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Callback to remove.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
+        </li>
+    </ul>
 
 
 
@@ -593,11 +554,16 @@ if (this.motionInput.isAvailable('energy')) {
     
 
     
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>false</li>
+        </ul></dd>
+    
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_MotionInput.js.html">client/services/MotionInput.js</a>, <a href="client_services_MotionInput.js.html#line100">line 100</a>
+        <a href="server_config_defaultEnvConfig.js.html">server/config/defaultEnvConfig.js</a>, <a href="server_config_defaultEnvConfig.js.html#line32">line 32</a>
     </li></ul></dd>
     
 
@@ -606,6 +572,13 @@ if (this.motionInput.isAvailable('energy')) {
     
 
     
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>- Defines how to consume real certificates</li>
+        </ul>
+    </dd>
+    
 </dl>
 
 
@@ -613,17 +586,9 @@ if (this.motionInput.isAvailable('energy')) {
 
 
 
-
-
-
-
-
-
-
-
-
-
         
+    
+
     
 
     

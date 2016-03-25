@@ -64,6 +64,10 @@ p code {
   color: #748087;
 }
 
+p a code {
+  color: #0095dd;
+}
+
 /* clean nav */
 nav li {
   margin-top: 1px;

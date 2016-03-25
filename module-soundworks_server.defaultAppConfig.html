@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Soundworks - Class: Network</title>
+    <title>Soundworks - Namespace: defaultAppConfig</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -19,7 +19,7 @@
 <div id="main">
 
     
-    <h1 class="page-title">Class: Network</h1>
+    <h1 class="page-title">Namespace: defaultAppConfig</h1>
     
 
     
@@ -32,12 +32,7 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-soundworks_client.html">soundworks/client</a>.</span>Network</h2>
-        
-            <div class="class-description"><p>Interface of the client <code>'network'</code> service.</p>
-<p>This service provides a generic way to create client to client communications
-through websockets without server side custom code.</p>
-<p><strong><em>The service must be used with its <a href="module-soundworks_server.Network.html">server-side counterpart</a></em></strong></p></div>
+            <span class="ancestors"><a href="module-soundworks_server.html">soundworks/server</a>.</span>defaultAppConfig</h2>
         
     
 </header>
@@ -46,31 +41,17 @@ through websockets without server side custom code.</p>
     <div class="container-overview">
     
         
+            <div class="description"><p>Set of configuration parameters for a particular application.
+These parameters typically inclusd a <code>setup</code> entry defining the place where
+the experience take place.</p>
+<p>Other entries can be added (as long as their name doesn't conflict with
+existing ones) to define global parameters of the application (for example:
+BPM, synth parameters, etc.) that can then be shared easily among all clients
+using the <a href="module-soundworks_server.SharedConfig.html"><code>shared-config</code></a>
+service.</p></div>
+        
 
-    
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="Network"><span class="type-signature"></span>new Network<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p><em><span class="warning"><strong>WARNING</strong></span> This class should never be instanciated manually</em></p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
+        
 
 
 <dl class="details">
@@ -102,44 +83,32 @@ through websockets without server side custom code.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_Network.js.html">client/services/Network.js</a>, <a href="client_services_Network.js.html#line25">line 25</a>
+        <a href="server_config_defaultAppConfig.js.html">server/config/defaultAppConfig.js</a>, <a href="server_config_defaultAppConfig.js.html#line20">line 20</a>
     </li></ul></dd>
     
 
     
 
     
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-soundworks_server.defaultEnvConfig.html">module:soundworks/server.defaultEnvConfig</a></li>
+        
+            <li><a href="module-soundworks_server.defaultFwConfig.html">module:soundworks/server.defaultFwConfig</a></li>
+        
+            <li><a href="module-soundworks_server.SharedConfig.html">module:soundworks/server.SharedConfig</a></li>
+        
+            <li><a href="https://github.com/collective-soundworks/soundworks-template">https://github.com/collective-soundworks/soundworks-template</a></li>
+        </ul>
+    </dd>
+    
 
     
 </dl>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>// inside the experience constructor
-this.network = this.require('network');
-// when the experience has started, listen for events
-this.network.receive('my:channel', (...args) => {
-  // do something with `args`
-});
-// somewhere in the experience
-this.network.send('player', 'my:channel', 42, false);</code></pre>
-
-
-
+        
     
     </div>
 
@@ -154,37 +123,120 @@ this.network.send('player', 'my:channel', 42, false);</code></pre>
     
 
     
-
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Members</h3>
 
         
             
+<h4 class="name" id=".appName"><span class="type-signature">(static) </span>appName<span class="type-signature"> :String</span></h4>
 
-    
-
-    <h4 class="name" id="broadcast"><span class="type-signature"></span>broadcast<span class="signature">(channel, &hellip;values)</span><span class="type-signature"></span></h4>
-
-    
 
 
 
 <div class="description">
-    <p>Send a message to all connected clients.</p>
+    <p>Title of the application, by default this value is used by the
+<a href="module-soundworks_client.Welcome.html"><code>welcome</code></a> service to populate
+its view.</p>
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
+
+
+        </li>
+    </ul>
 
 
 
 
 
+<dl class="details">
 
-    <h5>Parameters:</h5>
     
 
-<table class="params">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server_config_defaultAppConfig.js.html">server/config/defaultAppConfig.js</a>, <a href="server_config_defaultAppConfig.js.html#line27">line 27</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".setup"><span class="type-signature">(static) </span>setup<span class="type-signature"> :Object</span></h4>
+
+
+
+
+<div class="description">
+    <p>This entry is aimed to descibe the location where the experience takes
+places. All values can be overriden to match the existing location and
+experience setup but the structure of the object should be kept in order to
+be consummed properly by services like
+<a href="module-soundworks_client.Checkin.html"><code>checkin</code></a>,
+<a href="module-soundworks_client.Locator.html"><code>locator</code></a>,
+or <a href="module-soundworks_client.Placer.html"><code>placer</code></a>.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
     <thead>
     <tr>
         
@@ -198,6 +250,8 @@ this.network.send('player', 'my:channel', 42, false);</code></pre>
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -208,13 +262,13 @@ this.network.send('player', 'my:channel', 42, false);</code></pre>
 
         <tr>
             
-                <td class="name"><code>channel</code></td>
+                <td class="name"><code>setup.area</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">Object</span>
 
 
             
@@ -223,7 +277,7 @@ this.network.send('player', 'my:channel', 42, false);</code></pre>
             
                 <td class="attributes">
                 
-
+                    &lt;optional><br>
                 
 
                 
@@ -231,443 +285,17 @@ this.network.send('player', 'my:channel', 42, false);</code></pre>
             
 
             
-
-            <td class="description last"><p>Channel of the message.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>values</code></td>
-            
-
-            <td class="type">
-            
+                <td class="default">
                 
-<span class="param-type">Mixed</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                    &lt;repeatable><br>
+                    null
                 
                 </td>
             
 
-            
+            <td class="description last"><p>Dimensions of the area.</p>
+                <h6>Properties</h6>
 
-            <td class="description last"><p>Values to send in the message.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_Network.js.html">client/services/Network.js</a>, <a href="client_services_Network.js.html#line69">line 69</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="receive"><span class="type-signature"></span>receive<span class="signature">(channel, callback)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Register a callback to be executed when a message is received on a given
-channel.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>channel</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Channel to listen to.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Function to execute when a message is received.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_Network.js.html">client/services/Network.js</a>, <a href="client_services_Network.js.html#line80">line 80</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="removeListener"><span class="type-signature"></span>removeListener<span class="signature">(channel, callback)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Remove a callback from listening a given channel.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>channel</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Channel to stop listening to.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The previously registered callback function.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_Network.js.html">client/services/Network.js</a>, <a href="client_services_Network.js.html#line92">line 92</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="send"><span class="type-signature"></span>send<span class="signature">(clientTypes, channel, &hellip;values)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Send a message to given client type(s).</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
+<table class="props">
     <thead>
     <tr>
         
@@ -681,6 +309,8 @@ channel.</p>
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -691,16 +321,13 @@ channel.</p>
 
         <tr>
             
-                <td class="name"><code>clientTypes</code></td>
+                <td class="name"><code>height</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
-|
-
-<span class="param-type">Arrayw.&lt;String></span>
+<span class="param-type">Number</span>
 
 
             
@@ -709,7 +336,7 @@ channel.</p>
             
                 <td class="attributes">
                 
-
+                    &lt;optional><br>
                 
 
                 
@@ -717,22 +344,27 @@ channel.</p>
             
 
             
+                <td class="default">
+                
+                    10
+                
+                </td>
+            
 
-            <td class="description last"><p>Client type(s) to send the
- message to.</p></td>
+            <td class="description last"><p>Height of the area.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>channel</code></td>
+                <td class="name"><code>width</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">Number</span>
 
 
             
@@ -741,7 +373,7 @@ channel.</p>
             
                 <td class="attributes">
                 
-
+                    &lt;optional><br>
                 
 
                 
@@ -749,48 +381,173 @@ channel.</p>
             
 
             
-
-            <td class="description last"><p>Channel of the message.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>values</code></td>
-            
-
-            <td class="type">
-            
+                <td class="default">
                 
-<span class="param-type">Mixed</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                    &lt;repeatable><br>
+                    10
                 
                 </td>
             
 
-            
-
-            <td class="description last"><p>Values to send in the message.</p></td>
+            <td class="description last"><p>Width of the area.</p></td>
         </tr>
 
     
     </tbody>
 </table>
 
+            </td>
+        </tr>
 
+    
+
+        <tr>
+            
+                <td class="name"><code>setup.labels</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;String></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>List of predefined labels.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setup.coordinates</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Array></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>List of predefined coordinates
+ given as an array of <code>[x:Number, y:Number]</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setup.capacity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    Infinity
+                
+                </td>
+            
+
+            <td class="description last"><p>Maximum number of places
+ (may limit or be limited by the number of labels and/or coordinates).</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setup.maxClientsPerPosition</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+
+            <td class="description last"><p>The maximum number of
+ clients allowed in a position.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -824,12 +581,23 @@ channel.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_Network.js.html">client/services/Network.js</a>, <a href="client_services_Network.js.html#line59">line 59</a>
+        <a href="server_config_defaultAppConfig.js.html">server/config/defaultAppConfig.js</a>, <a href="server_config_defaultAppConfig.js.html#line61">line 61</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-soundworks_client.Checkin.html">module:soundworks/client.Checkin</a></li>
+        
+            <li><a href="module-soundworks_client.Locator.html">module:soundworks/client.Locator</a></li>
+        
+            <li><a href="module-soundworks_client.Placer.html">module:soundworks/client.Placer</a></li>
+        </ul>
+    </dd>
     
 
     
@@ -840,17 +608,9 @@ channel.</p>
 
 
 
-
-
-
-
-
-
-
-
-
-
         
+    
+
     
 
     

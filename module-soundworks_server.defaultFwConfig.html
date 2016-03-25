@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Soundworks - Class: Checkin</title>
+    <title>Soundworks - Namespace: defaultFwConfig</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -19,7 +19,7 @@
 <div id="main">
 
     
-    <h1 class="page-title">Class: Checkin</h1>
+    <h1 class="page-title">Namespace: defaultFwConfig</h1>
     
 
     
@@ -32,17 +32,7 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-soundworks_server.html">soundworks/server</a>.</span>Checkin</h2>
-        
-            <div class="class-description"><p>Interface of the server <code>'checkin'</code> service.</p>
-<p>This service is one of the provided services aimed at identifying clients inside
-the experience along with the <a href="module-soundworks_server.Locator.html"><code>'locator'</code></a>
-and <a href="module-soundworks_server.Placer.html"><code>'placer'</code></a> services.</p>
-<p>The <code>'checkin'</code> service is the more simple among these services as the server
-simply assign a ticket to the client among the available ones. The ticket can
-optionnaly be associated with coordinates or label according to the server
-<code>setup</code> configuration.</p>
-<p><strong><em>The service must be used with its <a href="module-soundworks_client.Checkin.html">client-side counterpart</a></em></strong></p></div>
+            <span class="ancestors"><a href="module-soundworks_server.html">soundworks/server</a>.</span>defaultFwConfig</h2>
         
     
 </header>
@@ -51,19 +41,173 @@ optionnaly be associated with coordinates or label according to the server
     <div class="container-overview">
     
         
+            <div class="description"><p>Configuration parameters of the Soundworks framework.
+These parameters allow for configuring server-side components of the
+framework such as Express and SocketIO.</p>
+<p><em>If the application is created using the provided
+<a href="https://github.com/collective-soundworks/soundworks-template"><code>application template</code></a>,
+most of these values should not be changed.</em></p></div>
+        
+
+        
+
+
+<dl class="details">
 
     
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="Checkin"><span class="type-signature"></span>new Checkin<span class="signature">(options)</span><span class="type-signature"></span></h4>
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server_config_defaultFwConfig.js.html">server/config/defaultFwConfig.js</a>, <a href="server_config_defaultFwConfig.js.html#line20">line 20</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-soundworks_server.defaultAppConfig.html">module:soundworks/server.defaultAppConfig</a></li>
+        
+            <li><a href="module-soundworks_server.defaultEnvConfig.html">module:soundworks/server.defaultEnvConfig</a></li>
+        
+            <li><a href="https://github.com/collective-soundworks/soundworks-template">https://github.com/collective-soundworks/soundworks-template</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".defaultClient"><span class="type-signature">(static) </span>defaultClient<span class="type-signature"> :String</span></h4>
+
 
 
 
 <div class="description">
-    <p><em><span class="warning"><strong>WARNING</strong></span> This class should never be instanciated manually</em></p>
+    <p>The name of the default client type, i.e. the client that can access the
+application at its root URL.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>'player'</li>
+        </ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server_config_defaultFwConfig.js.html">server/config/defaultFwConfig.js</a>, <a href="server_config_defaultFwConfig.js.html#line43">line 43</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".logger"><span class="type-signature">(static) </span>logger<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Bunyan configuration</p>
 </div>
 
 
@@ -72,54 +216,161 @@ optionnaly be associated with coordinates or label according to the server
 
 
 
+<dl class="details">
 
-
-    <h5>Parameters:</h5>
     
 
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
 
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
+    
 
-            <td class="type">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server_config_defaultFwConfig.js.html">server/config/defaultFwConfig.js</a>, <a href="server_config_defaultFwConfig.js.html#line67">line 67</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
             
-                
+<h4 class="name" id=".publicFolder"><span class="type-signature">(static) </span>publicFolder<span class="type-signature"> :String</span></h4>
+
+
+
+
+<div class="description">
+    <p>The location of the public directory inside the application. This directory
+should then host all the static assets of the application.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>'public'</li>
+        </ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server_config_defaultFwConfig.js.html">server/config/defaultFwConfig.js</a>, <a href="server_config_defaultFwConfig.js.html#line27">line 27</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".socketIO"><span class="type-signature">(static) </span>socketIO<span class="type-signature"> :Object</span></h4>
+
+
+
+
+<div class="description">
+    <p>Socket.io configuration.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">Object</span>
 
 
-            
-            </td>
+        </li>
+    </ul>
 
-            
 
-            
 
-            <td class="description last">
-                <h6>Properties</h6>
-                
 
-<table class="params">
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
     <thead>
     <tr>
         
@@ -145,13 +396,13 @@ optionnaly be associated with coordinates or label according to the server
 
         <tr>
             
-                <td class="name"><code>order</code></td>
+                <td class="name"><code>transports</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Boolean</span>
+<span class="param-type">Array</span>
 
 
             
@@ -164,32 +415,20 @@ optionnaly be associated with coordinates or label according to the server
                 
 
                 
-
-                
                 </td>
             
 
             
                 <td class="default">
                 
-                    'ascending'
+                    ['websockets']
                 
                 </td>
             
 
-            <td class="description last"><p>The order in which indices
-are assigned. Currently supported values are:</p>
-<ul>
-<li><code>'ascending'</code>: indices are assigned in ascending order</li>
-<li><code>'random'</code>: indices are assigned in random order</li>
-</ul></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last"><p>The prefered way to create
+ sockets. If the network is not controlled, this value should be reverted
+ back to socket.io's default value.</p></td>
         </tr>
 
     
@@ -199,8 +438,6 @@ are assigned. Currently supported values are:</p>
 
 
 
-
-
 <dl class="details">
 
     
@@ -230,21 +467,12 @@ are assigned. Currently supported values are:</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server_services_Checkin.js.html">server/services/Checkin.js</a>, <a href="server_services_Checkin.js.html#line36">line 36</a>
+        <a href="server_config_defaultFwConfig.js.html">server/config/defaultFwConfig.js</a>, <a href="server_config_defaultFwConfig.js.html#line52">line 52</a>
     </li></ul></dd>
     
 
     
 
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="module-soundworks_server.Locator.html">module:soundworks/server.Locator</a></li>
-        
-            <li><a href="module-soundworks_server.Placer.html">module:soundworks/server.Placer</a></li>
-        </ul>
-    </dd>
     
 
     
@@ -255,48 +483,16 @@ are assigned. Currently supported values are:</p>
 
 
 
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>// inside the experience constructor
-this.checkin = this.require('checkin');</code></pre>
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
         
             
-<h4 class="name" id="capacity"><span class="type-signature"></span>capacity<span class="type-signature"> :Number</span></h4>
+<h4 class="name" id=".templateFolder"><span class="type-signature">(static) </span>templateFolder<span class="type-signature"> :String</span></h4>
 
 
 
 
 <div class="description">
-    <p>Maximum number of clients checked in (may limit or be limited by the
-number of predefined labels and/or coordinates).</p>
+    <p>The location of the directory where the server templating system should
+find it's <code>ejs</code> templates.</p>
 </div>
 
 
@@ -305,7 +501,7 @@ number of predefined labels and/or coordinates).</p>
     <ul>
         <li>
             
-<span class="param-type">Number</span>
+<span class="param-type">String</span>
 
 
         </li>
@@ -340,155 +536,16 @@ number of predefined labels and/or coordinates).</p>
     
 
     
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server_services_Checkin.js.html">server/services/Checkin.js</a>, <a href="server_services_Checkin.js.html#line66">line 66</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="clients"><span class="type-signature"></span>clients<span class="type-signature"> :Array.&lt;Client></span></h4>
-
-
-
-
-<div class="description">
-    <p>List of the clients checked in at their corresponding indices.</p>
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Array.&lt;Client></span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>'html'</li>
+        </ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server_services_Checkin.js.html">server/services/Checkin.js</a>, <a href="server_services_Checkin.js.html#line72">line 72</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="setup"><span class="type-signature"></span>setup<span class="type-signature"> :Object</span></h4>
-
-
-
-
-<div class="description">
-    <p>Setup retrieved from server configuration.</p>
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Object</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server_services_Checkin.js.html">server/services/Checkin.js</a>, <a href="server_services_Checkin.js.html#line59">line 59</a>
+        <a href="server_config_defaultFwConfig.js.html">server/config/defaultFwConfig.js</a>, <a href="server_config_defaultFwConfig.js.html#line35">line 35</a>
     </li></ul></dd>
     
 
