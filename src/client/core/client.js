@@ -3,8 +3,8 @@ import Activity from './Activity';
 import serviceManager from './serviceManager';
 import viewManager from './viewManager';
 import socket from './socket';
-import defaultViewContent from '../config/defaultContent';
-import defaultViewTemplates from '../config/defaultTemplates';
+import defaultViewContent from '../config/defaultViewContent';
+import defaultViewTemplates from '../config/defaultViewTemplates';
 import viewport from '../views/viewport';
 
 /**
@@ -51,7 +51,7 @@ const client = {
   config: null,
 
   /**
-   * Information about the client platform. The properties are setted by the
+   * Information about the client platform. The properties are set by the
    * [`platform`]{@link module:soundworks/client.Platform} service.
    *
    * @type {Object}
@@ -62,7 +62,6 @@ const client = {
    *  the platform.
    *
    * @see {@link module:soundworks/client.Platform}
-   * @see {@link module:soundworks/client.Welcome}
    */
   platform: {
     os: null,
@@ -71,12 +70,11 @@ const client = {
   },
 
   /**
-   * Defines if the user's device is compatible with the application
+   * Defines whether the user's device is compatible with the application
    * requirements.
    *
    * @type {Boolean}
    * @see {@link module:soundworks/client.Platform}
-   * @see {@link module:soundworks/client.Welcome}
    */
   compatible: null,
 
@@ -246,4 +244,3 @@ const client = {
 };
 
 export default client;
-
