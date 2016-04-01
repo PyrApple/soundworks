@@ -36,8 +36,8 @@
         
             <div class="class-description"><p>Interface of the client <code>'shared-params'</code> service.</p>
 <p>This service is used to maintain and update global parameters used among
-all connected clients. Each defined parameter (<code>item</code>) can be of the following
-data type:</p>
+all connected clients. Each defined parameter can be of the following
+data types:</p>
 <ul>
 <li>boolean</li>
 <li>enum</li>
@@ -45,9 +45,9 @@ data type:</p>
 <li>text</li>
 <li>trigger</li>
 </ul>
-<p>This type and specific attributes of an item is configured server side.
+<p>This type and specific attributes of an parameter is configured server side.
 The service is espacially usefull if a special client is defined with the
-<code>hasGUI</code> option setted to true, allowing to create a special client aimed at
+<code>hasGUI</code> option set to true, allowing to create a special client aimed at
 controlling the different parameters of the experience.</p>
 <p><strong><em>The service must be used with its <a href="module-soundworks_server.SharedParams.html">server-side counterpart</a></em></strong></p></div>
         
@@ -184,7 +184,7 @@ controlling the different parameters of the experience.</p>
                 </td>
             
 
-            <td class="description last"><p>Defines if the service should display
+            <td class="description last"><p>Defines whether the service should display
  a GUI. If set to <code>true</code>, the service never set its <code>ready</code> signal to true and
  the client application stay in this state forever. The option should then be
  used create special clients (sometimes called <code>conductor</code>) aimed at
@@ -236,7 +236,7 @@ controlling the different parameters of the experience.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_SharedParams.js.html">client/services/SharedParams.js</a>, <a href="client_services_SharedParams.js.html#line278">line 278</a>
+        <a href="client_services_SharedParams.js.html">client/services/SharedParams.js</a>, <a href="client_services_SharedParams.js.html#line279">line 279</a>
     </li></ul></dd>
     
 
@@ -265,8 +265,8 @@ controlling the different parameters of the experience.</p>
     
     <pre class="prettyprint"><code>// inside the experience constructor
 this.control = this.require('shared-params');
-// when the experience starts, listen for item updates
-this.control.addItemListener('synth:gain', (value) => {
+// when the experience starts, listen for parameter updates
+this.control.addParamListener('synth:gain', (value) => {
   this.synth.setGain(value);
 });</code></pre>
 
@@ -295,15 +295,15 @@ this.control.addItemListener('synth:gain', (value) => {
 
     
 
-    <h4 class="name" id="addItemListener"><span class="type-signature"></span>addItemListener<span class="signature">(name, listener)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="addParamListener"><span class="type-signature"></span>addParamListener<span class="signature">(name, listener)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Add a listener to listen a specific item changes. The listener is called a first
-time when added to retrieve the current value of the item.</p>
+    <p>Add a listener to listen a specific parameter changes. The listener is called a first
+time when added to retrieve the current value of the parameter.</p>
 </div>
 
 
@@ -355,7 +355,7 @@ time when added to retrieve the current value of the item.</p>
 
             
 
-            <td class="description last"><p>Name of the item.</p></td>
+            <td class="description last"><p>Name of the parameter.</p></td>
         </tr>
 
     
@@ -368,7 +368,7 @@ time when added to retrieve the current value of the item.</p>
             <td class="type">
             
                 
-<span class="param-type"><a href="module-soundworks_client.SharedParams.html#~itemCallback">module:soundworks/client.SharedParams~itemCallback</a></span>
+<span class="param-type"><a href="module-soundworks_client.SharedParams.html#~paramCallback">module:soundworks/client.SharedParams~paramCallback</a></span>
 
 
             
@@ -420,7 +420,7 @@ time when added to retrieve the current value of the item.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_SharedParams.js.html">client/services/SharedParams.js</a>, <a href="client_services_SharedParams.js.html#line359">line 359</a>
+        <a href="client_services_SharedParams.js.html">client/services/SharedParams.js</a>, <a href="client_services_SharedParams.js.html#line360">line 360</a>
     </li></ul></dd>
     
 
@@ -458,7 +458,7 @@ time when added to retrieve the current value of the item.</p>
 
 
 <div class="description">
-    <p>Get the value of a given item.</p>
+    <p>Get the value of a given parameter.</p>
 </div>
 
 
@@ -510,7 +510,7 @@ time when added to retrieve the current value of the item.</p>
 
             
 
-            <td class="description last"><p>The name of the item.</p></td>
+            <td class="description last"><p>The name of the parameter.</p></td>
         </tr>
 
     
@@ -551,7 +551,7 @@ time when added to retrieve the current value of the item.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_SharedParams.js.html">client/services/SharedParams.js</a>, <a href="client_services_SharedParams.js.html#line393">line 393</a>
+        <a href="client_services_SharedParams.js.html">client/services/SharedParams.js</a>, <a href="client_services_SharedParams.js.html#line394">line 394</a>
     </li></ul></dd>
     
 
@@ -579,7 +579,7 @@ time when added to retrieve the current value of the item.</p>
         
 <div class="param-desc">
     <ul>
-<li>The current value of the item.</li>
+<li>The current value of the parameter.</li>
 </ul>
 </div>
 
@@ -606,14 +606,14 @@ time when added to retrieve the current value of the item.</p>
 
     
 
-    <h4 class="name" id="removeItemListener"><span class="type-signature"></span>removeItemListener<span class="signature">(name, listener)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="removeParamListener"><span class="type-signature"></span>removeParamListener<span class="signature">(name, listener)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Remove a listener from listening a specific item changes.</p>
+    <p>Remove a listener from listening a specific parameter changes.</p>
 </div>
 
 
@@ -665,7 +665,7 @@ time when added to retrieve the current value of the item.</p>
 
             
 
-            <td class="description last"><p>Name of the event.</p></td>
+            <td class="description last"><p>Name of the parameter.</p></td>
         </tr>
 
     
@@ -678,7 +678,7 @@ time when added to retrieve the current value of the item.</p>
             <td class="type">
             
                 
-<span class="param-type"><a href="module-soundworks_client.SharedParams.html#~itemCallback">module:soundworks/client.SharedParams~itemCallback</a></span>
+<span class="param-type"><a href="module-soundworks_client.SharedParams.html#~paramCallback">module:soundworks/client.SharedParams~paramCallback</a></span>
 
 
             
@@ -730,7 +730,7 @@ time when added to retrieve the current value of the item.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_SharedParams.js.html">client/services/SharedParams.js</a>, <a href="client_services_SharedParams.js.html#line378">line 378</a>
+        <a href="client_services_SharedParams.js.html">client/services/SharedParams.js</a>, <a href="client_services_SharedParams.js.html#line379">line 379</a>
     </li></ul></dd>
     
 
@@ -768,7 +768,7 @@ time when added to retrieve the current value of the item.</p>
 
 
 <div class="description">
-    <p>Configure the GUI for a specific item, this method only makes sens if
+    <p>Configure the GUI for a given parameter, this method only makes sens if
 <code>options.hasGUI=true</code>.</p>
 </div>
 
@@ -821,7 +821,7 @@ time when added to retrieve the current value of the item.</p>
 
             
 
-            <td class="description last"><p>Name of the item to configure.</p></td>
+            <td class="description last"><p>Name of the parameter to configure.</p></td>
         </tr>
 
     
@@ -844,7 +844,7 @@ time when added to retrieve the current value of the item.</p>
 
             
 
-            <td class="description last"><p>Options to configure the item GUI.</p>
+            <td class="description last"><p>Options to configure the parameter GUI.</p>
                 <h6>Properties</h6>
                 
 
@@ -902,7 +902,7 @@ time when added to retrieve the current value of the item.</p>
                 </td>
             
 
-            <td class="description last"><p>Type of GUI to use. Each type of item can
+            <td class="description last"><p>Type of GUI to use. Each type of parameter can
  used with different GUI according to their type and comes with acceptable
  default values.</p></td>
         </tr>
@@ -943,7 +943,7 @@ time when added to retrieve the current value of the item.</p>
                 </td>
             
 
-            <td class="description last"><p>Display or not the GUI for this item.</p></td>
+            <td class="description last"><p>Display or not the GUI for this parameter.</p></td>
         </tr>
 
     
@@ -1030,7 +1030,7 @@ time when added to retrieve the current value of the item.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_SharedParams.js.html">client/services/SharedParams.js</a>, <a href="client_services_SharedParams.js.html#line455">line 455</a>
+        <a href="client_services_SharedParams.js.html">client/services/SharedParams.js</a>, <a href="client_services_SharedParams.js.html#line456">line 456</a>
     </li></ul></dd>
     
 
@@ -1067,7 +1067,7 @@ time when added to retrieve the current value of the item.</p>
 
     
 
-    <h4 class="name" id="~itemCallback"><span class="type-signature"></span>itemCallback<span class="signature">(value)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~paramCallback"><span class="type-signature"></span>paramCallback<span class="signature">(value)</span><span class="type-signature"></span></h4>
 
     
 
@@ -1122,7 +1122,7 @@ time when added to retrieve the current value of the item.</p>
 
             
 
-            <td class="description last"><p>Updated value of the item.</p></td>
+            <td class="description last"><p>Updated value of the shared parameter.</p></td>
         </tr>
 
     
@@ -1163,7 +1163,7 @@ time when added to retrieve the current value of the item.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_SharedParams.js.html">client/services/SharedParams.js</a>, <a href="client_services_SharedParams.js.html#line348">line 348</a>
+        <a href="client_services_SharedParams.js.html">client/services/SharedParams.js</a>, <a href="client_services_SharedParams.js.html#line349">line 349</a>
     </li></ul></dd>
     
 
@@ -1203,13 +1203,13 @@ time when added to retrieve the current value of the item.</p>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-soundworks_client.html">soundworks/client</a></li><li><a href="module-soundworks_server.html">soundworks/server</a></li></ul><h3>Classes</h3><ul><li><a href="module-soundworks_client.Activity.html">soundworks/client.Activity</a></li><li><a href="module-soundworks_client.CanvasView.html">soundworks/client.CanvasView</a></li><li><a href="module-soundworks_client.Checkin.html">soundworks/client.Checkin</a></li><li><a href="module-soundworks_client.ErrorReporter.html">soundworks/client.ErrorReporter</a></li><li><a href="module-soundworks_client.Experience.html">soundworks/client.Experience</a></li><li><a href="module-soundworks_client.Loader.html">soundworks/client.Loader</a></li><li><a href="module-soundworks_client.Locator.html">soundworks/client.Locator</a></li><li><a href="module-soundworks_client.MotionInput.html">soundworks/client.MotionInput</a></li><li><a href="module-soundworks_client.Network.html">soundworks/client.Network</a></li><li><a href="module-soundworks_client.Placer.html">soundworks/client.Placer</a></li><li><a href="module-soundworks_client.Platform.html">soundworks/client.Platform</a></li><li><a href="module-soundworks_client.Renderer.html">soundworks/client.Renderer</a></li><li><a href="module-soundworks_client.Scene.html">soundworks/client.Scene</a></li><li><a href="module-soundworks_client.Scheduler.html">soundworks/client.Scheduler</a></li><li><a href="module-soundworks_client.SegmentedView.html">soundworks/client.SegmentedView</a></li><li><a href="module-soundworks_client.SharedConfig.html">soundworks/client.SharedConfig</a></li><li><a href="module-soundworks_client.SharedParams.html">soundworks/client.SharedParams</a></li><li><a href="module-soundworks_client.Sync.html">soundworks/client.Sync</a></li><li><a href="module-soundworks_client.View.html">soundworks/client.View</a></li><li><a href="module-soundworks_client.Welcome.html">soundworks/client.Welcome</a></li><li><a href="module-soundworks_server.Checkin.html">soundworks/server.Checkin</a></li><li><a href="module-soundworks_server.ErrorReporter.html">soundworks/server.ErrorReporter</a></li><li><a href="module-soundworks_server.Locator.html">soundworks/server.Locator</a></li><li><a href="module-soundworks_server.Network.html">soundworks/server.Network</a></li><li><a href="module-soundworks_server.Osc.html">soundworks/server.Osc</a></li><li><a href="module-soundworks_server.Placer.html">soundworks/server.Placer</a></li><li><a href="module-soundworks_server.SharedConfig.html">soundworks/server.SharedConfig</a></li><li><a href="module-soundworks_server.SharedParams.html">soundworks/server.SharedParams</a></li><li><a href="module-soundworks_server.Sync.html">soundworks/server.Sync</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-soundworks_client.client.html">soundworks/client.client</a></li><li><a href="module-soundworks_client.defaultViewContent.html">soundworks/client.defaultViewContent</a></li><li><a href="module-soundworks_client.defaultViewTemplates.html">soundworks/client.defaultViewTemplates</a></li><li><a href="module-soundworks_client.viewport.html">soundworks/client.viewport</a></li><li><a href="module-soundworks_server.defaultAppConfig.html">soundworks/server.defaultAppConfig</a></li><li><a href="module-soundworks_server.defaultEnvConfig.html">soundworks/server.defaultEnvConfig</a></li><li><a href="module-soundworks_server.defaultFwConfig.html">soundworks/server.defaultFwConfig</a></li><li><a href="module-soundworks_server.server.html">soundworks/server.server</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-soundworks_client.html">soundworks/client</a></li><li><a href="module-soundworks_server.html">soundworks/server</a></li></ul><h3>Classes</h3><ul><li><a href="module-soundworks_client.Activity.html">soundworks/client.Activity</a></li><li><a href="module-soundworks_client.CanvasView.html">soundworks/client.CanvasView</a></li><li><a href="module-soundworks_client.Checkin.html">soundworks/client.Checkin</a></li><li><a href="module-soundworks_client.ErrorReporter.html">soundworks/client.ErrorReporter</a></li><li><a href="module-soundworks_client.Experience.html">soundworks/client.Experience</a></li><li><a href="module-soundworks_client.Loader.html">soundworks/client.Loader</a></li><li><a href="module-soundworks_client.Locator.html">soundworks/client.Locator</a></li><li><a href="module-soundworks_client.MotionInput.html">soundworks/client.MotionInput</a></li><li><a href="module-soundworks_client.Network.html">soundworks/client.Network</a></li><li><a href="module-soundworks_client.Placer.html">soundworks/client.Placer</a></li><li><a href="module-soundworks_client.Platform.html">soundworks/client.Platform</a></li><li><a href="module-soundworks_client.Renderer.html">soundworks/client.Renderer</a></li><li><a href="module-soundworks_client.Scene.html">soundworks/client.Scene</a></li><li><a href="module-soundworks_client.Scheduler.html">soundworks/client.Scheduler</a></li><li><a href="module-soundworks_client.SegmentedView.html">soundworks/client.SegmentedView</a></li><li><a href="module-soundworks_client.SharedConfig.html">soundworks/client.SharedConfig</a></li><li><a href="module-soundworks_client.SharedParams.html">soundworks/client.SharedParams</a></li><li><a href="module-soundworks_client.Sync.html">soundworks/client.Sync</a></li><li><a href="module-soundworks_client.View.html">soundworks/client.View</a></li><li><a href="module-soundworks_server.Checkin.html">soundworks/server.Checkin</a></li><li><a href="module-soundworks_server.ErrorReporter.html">soundworks/server.ErrorReporter</a></li><li><a href="module-soundworks_server.Locator.html">soundworks/server.Locator</a></li><li><a href="module-soundworks_server.Network.html">soundworks/server.Network</a></li><li><a href="module-soundworks_server.Osc.html">soundworks/server.Osc</a></li><li><a href="module-soundworks_server.Placer.html">soundworks/server.Placer</a></li><li><a href="module-soundworks_server.SharedConfig.html">soundworks/server.SharedConfig</a></li><li><a href="module-soundworks_server.SharedParams.html">soundworks/server.SharedParams</a></li><li><a href="module-soundworks_server.Sync.html">soundworks/server.Sync</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-soundworks_client.client.html">soundworks/client.client</a></li><li><a href="module-soundworks_client.defaultViewContent.html">soundworks/client.defaultViewContent</a></li><li><a href="module-soundworks_client.defaultViewTemplates.html">soundworks/client.defaultViewTemplates</a></li><li><a href="module-soundworks_client.viewport.html">soundworks/client.viewport</a></li><li><a href="module-soundworks_server.defaultAppConfig.html">soundworks/server.defaultAppConfig</a></li><li><a href="module-soundworks_server.defaultEnvConfig.html">soundworks/server.defaultEnvConfig</a></li><li><a href="module-soundworks_server.defaultFwConfig.html">soundworks/server.defaultFwConfig</a></li><li><a href="module-soundworks_server.server.html">soundworks/server.server</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Mar 25 2016 12:18:51 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Apr 01 2016 16:40:21 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

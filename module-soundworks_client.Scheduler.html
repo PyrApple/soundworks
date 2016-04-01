@@ -608,7 +608,7 @@ of the audio context.</p>
             <td class="type">
             
                 
-<span class="param-type">Number</span>
+<span class="param-type">Boolean</span>
 
 
             
@@ -634,7 +634,7 @@ of the audio context.</p>
                 </td>
             
 
-            <td class="description last"><p>Defines if the engine should be
+            <td class="description last"><p>Defines whether the engine should be
  synchronized or not.</p></td>
         </tr>
 
@@ -676,7 +676,7 @@ of the audio context.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_Scheduler.js.html">client/services/Scheduler.js</a>, <a href="client_services_Scheduler.js.html#line177">line 177</a>
+        <a href="client_services_Scheduler.js.html">client/services/Scheduler.js</a>, <a href="client_services_Scheduler.js.html#line198">line 198</a>
     </li></ul></dd>
     
 
@@ -765,7 +765,7 @@ of the audio context.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_Scheduler.js.html">client/services/Scheduler.js</a>, <a href="client_services_Scheduler.js.html#line197">line 197</a>
+        <a href="client_services_Scheduler.js.html">client/services/Scheduler.js</a>, <a href="client_services_Scheduler.js.html#line218">line 218</a>
     </li></ul></dd>
     
 
@@ -796,7 +796,7 @@ of the audio context.</p>
 
     
 
-    <h4 class="name" id="defer"><span class="type-signature"></span>defer<span class="signature">(fun, time, synchronized<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="defer"><span class="type-signature"></span>defer<span class="signature">(fun, time, synchronized<span class="signature-attributes">opt</span>, lookahead<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -919,7 +919,7 @@ of the audio context.</p>
             <td class="type">
             
                 
-<span class="param-type">Number</span>
+<span class="param-type">Boolean</span>
 
 
             
@@ -945,8 +945,47 @@ of the audio context.</p>
                 </td>
             
 
-            <td class="description last"><p>Defines if the function call should be
- synchronized or not.</p></td>
+            <td class="description last"><p>Defines whether the function call should be</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>lookahead</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>Defines whether the function is called anticipated
+(e.g. for audio events) or precisely at the given time (default).</p></td>
         </tr>
 
     
@@ -987,7 +1026,7 @@ of the audio context.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_Scheduler.js.html">client/services/Scheduler.js</a>, <a href="client_services_Scheduler.js.html#line164">line 164</a>
+        <a href="client_services_Scheduler.js.html">client/services/Scheduler.js</a>, <a href="client_services_Scheduler.js.html#line165">line 165</a>
     </li></ul></dd>
     
 
@@ -1118,7 +1157,7 @@ of the audio context.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client_services_Scheduler.js.html">client/services/Scheduler.js</a>, <a href="client_services_Scheduler.js.html#line187">line 187</a>
+        <a href="client_services_Scheduler.js.html">client/services/Scheduler.js</a>, <a href="client_services_Scheduler.js.html#line208">line 208</a>
     </li></ul></dd>
     
 
@@ -1167,13 +1206,13 @@ of the audio context.</p>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-soundworks_client.html">soundworks/client</a></li><li><a href="module-soundworks_server.html">soundworks/server</a></li></ul><h3>Classes</h3><ul><li><a href="module-soundworks_client.Activity.html">soundworks/client.Activity</a></li><li><a href="module-soundworks_client.CanvasView.html">soundworks/client.CanvasView</a></li><li><a href="module-soundworks_client.Checkin.html">soundworks/client.Checkin</a></li><li><a href="module-soundworks_client.ErrorReporter.html">soundworks/client.ErrorReporter</a></li><li><a href="module-soundworks_client.Experience.html">soundworks/client.Experience</a></li><li><a href="module-soundworks_client.Loader.html">soundworks/client.Loader</a></li><li><a href="module-soundworks_client.Locator.html">soundworks/client.Locator</a></li><li><a href="module-soundworks_client.MotionInput.html">soundworks/client.MotionInput</a></li><li><a href="module-soundworks_client.Network.html">soundworks/client.Network</a></li><li><a href="module-soundworks_client.Placer.html">soundworks/client.Placer</a></li><li><a href="module-soundworks_client.Platform.html">soundworks/client.Platform</a></li><li><a href="module-soundworks_client.Renderer.html">soundworks/client.Renderer</a></li><li><a href="module-soundworks_client.Scene.html">soundworks/client.Scene</a></li><li><a href="module-soundworks_client.Scheduler.html">soundworks/client.Scheduler</a></li><li><a href="module-soundworks_client.SegmentedView.html">soundworks/client.SegmentedView</a></li><li><a href="module-soundworks_client.SharedConfig.html">soundworks/client.SharedConfig</a></li><li><a href="module-soundworks_client.SharedParams.html">soundworks/client.SharedParams</a></li><li><a href="module-soundworks_client.Sync.html">soundworks/client.Sync</a></li><li><a href="module-soundworks_client.View.html">soundworks/client.View</a></li><li><a href="module-soundworks_client.Welcome.html">soundworks/client.Welcome</a></li><li><a href="module-soundworks_server.Checkin.html">soundworks/server.Checkin</a></li><li><a href="module-soundworks_server.ErrorReporter.html">soundworks/server.ErrorReporter</a></li><li><a href="module-soundworks_server.Locator.html">soundworks/server.Locator</a></li><li><a href="module-soundworks_server.Network.html">soundworks/server.Network</a></li><li><a href="module-soundworks_server.Osc.html">soundworks/server.Osc</a></li><li><a href="module-soundworks_server.Placer.html">soundworks/server.Placer</a></li><li><a href="module-soundworks_server.SharedConfig.html">soundworks/server.SharedConfig</a></li><li><a href="module-soundworks_server.SharedParams.html">soundworks/server.SharedParams</a></li><li><a href="module-soundworks_server.Sync.html">soundworks/server.Sync</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-soundworks_client.client.html">soundworks/client.client</a></li><li><a href="module-soundworks_client.defaultViewContent.html">soundworks/client.defaultViewContent</a></li><li><a href="module-soundworks_client.defaultViewTemplates.html">soundworks/client.defaultViewTemplates</a></li><li><a href="module-soundworks_client.viewport.html">soundworks/client.viewport</a></li><li><a href="module-soundworks_server.defaultAppConfig.html">soundworks/server.defaultAppConfig</a></li><li><a href="module-soundworks_server.defaultEnvConfig.html">soundworks/server.defaultEnvConfig</a></li><li><a href="module-soundworks_server.defaultFwConfig.html">soundworks/server.defaultFwConfig</a></li><li><a href="module-soundworks_server.server.html">soundworks/server.server</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-soundworks_client.html">soundworks/client</a></li><li><a href="module-soundworks_server.html">soundworks/server</a></li></ul><h3>Classes</h3><ul><li><a href="module-soundworks_client.Activity.html">soundworks/client.Activity</a></li><li><a href="module-soundworks_client.CanvasView.html">soundworks/client.CanvasView</a></li><li><a href="module-soundworks_client.Checkin.html">soundworks/client.Checkin</a></li><li><a href="module-soundworks_client.ErrorReporter.html">soundworks/client.ErrorReporter</a></li><li><a href="module-soundworks_client.Experience.html">soundworks/client.Experience</a></li><li><a href="module-soundworks_client.Loader.html">soundworks/client.Loader</a></li><li><a href="module-soundworks_client.Locator.html">soundworks/client.Locator</a></li><li><a href="module-soundworks_client.MotionInput.html">soundworks/client.MotionInput</a></li><li><a href="module-soundworks_client.Network.html">soundworks/client.Network</a></li><li><a href="module-soundworks_client.Placer.html">soundworks/client.Placer</a></li><li><a href="module-soundworks_client.Platform.html">soundworks/client.Platform</a></li><li><a href="module-soundworks_client.Renderer.html">soundworks/client.Renderer</a></li><li><a href="module-soundworks_client.Scene.html">soundworks/client.Scene</a></li><li><a href="module-soundworks_client.Scheduler.html">soundworks/client.Scheduler</a></li><li><a href="module-soundworks_client.SegmentedView.html">soundworks/client.SegmentedView</a></li><li><a href="module-soundworks_client.SharedConfig.html">soundworks/client.SharedConfig</a></li><li><a href="module-soundworks_client.SharedParams.html">soundworks/client.SharedParams</a></li><li><a href="module-soundworks_client.Sync.html">soundworks/client.Sync</a></li><li><a href="module-soundworks_client.View.html">soundworks/client.View</a></li><li><a href="module-soundworks_server.Checkin.html">soundworks/server.Checkin</a></li><li><a href="module-soundworks_server.ErrorReporter.html">soundworks/server.ErrorReporter</a></li><li><a href="module-soundworks_server.Locator.html">soundworks/server.Locator</a></li><li><a href="module-soundworks_server.Network.html">soundworks/server.Network</a></li><li><a href="module-soundworks_server.Osc.html">soundworks/server.Osc</a></li><li><a href="module-soundworks_server.Placer.html">soundworks/server.Placer</a></li><li><a href="module-soundworks_server.SharedConfig.html">soundworks/server.SharedConfig</a></li><li><a href="module-soundworks_server.SharedParams.html">soundworks/server.SharedParams</a></li><li><a href="module-soundworks_server.Sync.html">soundworks/server.Sync</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-soundworks_client.client.html">soundworks/client.client</a></li><li><a href="module-soundworks_client.defaultViewContent.html">soundworks/client.defaultViewContent</a></li><li><a href="module-soundworks_client.defaultViewTemplates.html">soundworks/client.defaultViewTemplates</a></li><li><a href="module-soundworks_client.viewport.html">soundworks/client.viewport</a></li><li><a href="module-soundworks_server.defaultAppConfig.html">soundworks/server.defaultAppConfig</a></li><li><a href="module-soundworks_server.defaultEnvConfig.html">soundworks/server.defaultEnvConfig</a></li><li><a href="module-soundworks_server.defaultFwConfig.html">soundworks/server.defaultFwConfig</a></li><li><a href="module-soundworks_server.server.html">soundworks/server.server</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Mar 25 2016 12:18:51 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Apr 01 2016 16:40:21 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -9,6 +9,8 @@
 # documentation default output
 /out
 
+CHANGELOG.md
+
 # junk files
 npm-debug.log
 .DS_Store
